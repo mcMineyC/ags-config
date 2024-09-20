@@ -1,0 +1,88 @@
+window{
+  background-color: transparent;
+  font-family: "JetBrainsMono";
+}
+.corner {
+  background-color: black;
+  color: black;
+  border-radius: 48px;
+}
+.bar{
+  background-color: transparent;
+  // opacity: 1;
+  // opacity: 0;
+  border-radius: 0px;
+}
+// .bar > box > box{
+//   padding-top: 8px;
+//   padding-bottom: 8px;
+//   // padding-left: 8px;
+//   // padding-right: 8px;
+// }
+
+.bar-left{
+  padding-left: 32px;
+  padding-right: 16px;
+  border-bottom-right-radius: 16px;
+  background-color: rgba(26,13,65,0.3);
+  // background-color: blue;
+}
+.bar-left-logo{
+  margin: 0px 16px 0px 16px;
+}
+.applebutton{
+  background-color: transparent;
+  margin: 4px 0px 4px 0px;
+}
+.bar-center{
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  min-width: 200px;
+  // background-color: purple;
+  // background-color: rgba(46,46,46,0.4);
+  background-color: black;
+}
+.bar-center-corner {
+  background-color: purple;
+}
+.bar-right{
+  padding-left: 16px;
+  padding-right: 32px;
+  border-bottom-left-radius: 16px;
+  background-color: rgba(26,13,65,0.3);
+  label{
+    font-weight: 800;
+  }
+}
+.battery-charging{
+  color: #B1D4A5
+}
+
+// .bar > box {
+//   padding-left: 32px;
+//   padding-right: 32px;
+// }
+.background-tile {
+  min-width: 256px;
+  min-height: 256px;
+  background-color: mix(transparent, #3D8AC2, 30%);
+  opacity: 0.5;
+  border-radius: 32px;
+}
+
+.deskclock-text {
+  font-family: "JetBrainsMono";
+  font-size: 100pt;
+  font-weight: 900;
+}
+
+.deskclock-text-top{
+  margin-top: -8px;
+}
+.deskclock-text-bottom {
+  margin-top: -60px;
+}
