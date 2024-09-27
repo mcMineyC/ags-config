@@ -1,4 +1,6 @@
 import { CornerTL, CornerTR, CornerBR, CornerBL} from "./rounded_corners.js";
+import { ClockWidget, BatteryWidget, KdeConnectDevicesWidget } from "./widgets.js";
+import KdeConnectService from "./kdeconnect_service.js";
 const battery = await Service.import("battery");
 
 const clockVar = Variable(new Date(), {
@@ -20,6 +22,12 @@ battery.connect("changed", (val) => {
     battNotifStatus.cr1t1cal = true;
   }
 })
+
+//console.log(proxy);
+//proxy.connect('g-properties-changed', (_proxy, _changed, _invalidated) => {
+//  console.log("Changed")
+//  console.log(_changed);
+//});
 
 const bar = Widget.Window({
   "class-name": "bar",
@@ -52,30 +60,38 @@ const bar = Widget.Window({
           hexpand: false,
           vexpand: true,
           className: "bar-center",
-          //child: Widget.Label({
-            //label: "Hi, it is [Object object] o'clock"
-          //}),
-          centerWidget: Widget.Label().hook(clockVar, self => {
-            var clock = clockVar.value;
-            var minutes = clock.getMinutes();
-            var hours = clock.getHours() > 12 ? clock.getHours() - 12 : clock.getHours();
-            var apm = clock.getHours() >= 12 ? "pm" : "am";
-            self.label = `${hours}:${minutes.toString().padStart(2, "0")} ${apm}`;
-          })
+          startWidget: Widget.Stack({
+            children: {
+              "clock": ClockWidget(clockVar),
+              "nothing": Widget.Box(),
+            },
+            transition: KdeConnectService.bind("devices").as((c) => c.length == 0 ? "slide_right" : "slide_left"),
+            shown: KdeConnectService.bind("devices").as((c) => c.length == 0 ? "nothing" : "clock"),
+          }),
+          centerWidget: Widget.Stack({
+            children: {
+              "clock": ClockWidget(clockVar),
+              "nothing": Widget.Box(),
+            },
+            transition: KdeConnectService.bind("devices").as((c) => c.length == 0 ? "slide_right" : "slide_left"),
+            shown: KdeConnectService.bind("devices").as((c) => c.length == 0 ? "clock" : "nothing"),
+          }),
+          endWidget: Widget.Stack({
+            children: {
+              "nothing": Widget.Box(),
+              "devices": KdeConnectDevicesWidget(KdeConnectService),
+            },
+            transition: KdeConnectService.bind("devices").as((c) => c.length == 0 ? "slide_right" : "slide_left"),
+            shown: KdeConnectService.bind("devices").as((c) => c.length == 0 ? "nothing" : "devices"),
+          }),
         }),
-        //RoundedCorner("topleft", {className: "bar-center-corner"}),
       ]
-  }),
+    }),
     endWidget: Widget.Box({
       hpack: "end",
       className: "bar-right",
       children: [
-        Widget.Label({
-          className: battery.bind("charging").as(c => c ? "battery-charging" : "")
-        }).hook(battery, self => {
-          self.label = `${Math.round(battery.percent)}%`
-          self.visible = battery.available
-        }, "changed")
+        BatteryWidget(battery, KdeConnectService),
       ]
     }),
   }),

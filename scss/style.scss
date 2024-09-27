@@ -58,6 +58,18 @@ window{
     font-weight: 800;
   }
 }
+.battery-device-box :first-child{
+  margin-right: 4px;
+}
+.battery-device-box{
+  margin-right: 8px;
+}
+.battery-this-box :first-child{
+  margin-right: 4px;
+}
+.battery-this-box{
+  margin-right: 8px;
+}
 .battery-charging{
   color: #B1D4A5
 }
